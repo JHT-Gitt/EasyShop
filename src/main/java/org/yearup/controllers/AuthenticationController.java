@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import org.yearup.models.ErrorResponse;
 import org.yearup.models.Profile;
 import org.yearup.data.ProfileDao;
 import org.yearup.data.UserDao;
@@ -67,32 +68,30 @@ public class AuthenticationController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto newUser) {
 
-        try
-        {
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterUserDto newUser) {
+        try {
             boolean exists = userDao.exists(newUser.getUsername());
-            if (exists)
-            {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
+            if (exists) {
+                ErrorResponse error = new ErrorResponse("Username already taken.");
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
             }
 
-            // create user
             User user = userDao.create(new User(0, newUser.getUsername(), newUser.getPassword(), newUser.getRole()));
-
-            // create profile
             Profile profile = new Profile();
             profile.setUserId(user.getId());
             profileDao.create(profile);
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        }
-        catch (Exception e)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorResponse error = new ErrorResponse("Oops... something went wrong.");
+            return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }
 
