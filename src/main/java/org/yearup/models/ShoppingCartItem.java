@@ -16,6 +16,10 @@ public class ShoppingCartItem
         this.quantity = quantity;
     }
 
+    public ShoppingCartItem() {
+
+    }
+
     public Product getProduct()
     {
         return product;
@@ -51,15 +55,22 @@ public class ShoppingCartItem
     {
         return this.product.getProductId();
     }
-
-    public BigDecimal getLineTotal()
-    {
+    public BigDecimal getLineTotal() {
         BigDecimal basePrice = product.getPrice();
-        BigDecimal quantity = new BigDecimal(this.quantity);
-
-        BigDecimal subTotal = basePrice.multiply(quantity);
+        BigDecimal quantityBD = BigDecimal.valueOf(quantity);
+        BigDecimal subTotal = basePrice.multiply(quantityBD);
         BigDecimal discountAmount = subTotal.multiply(discountPercent);
-
         return subTotal.subtract(discountAmount);
     }
+
+//    public BigDecimal getLineTotal()
+//    {
+//        BigDecimal basePrice = product.getPrice();
+//        BigDecimal quantity = new BigDecimal(this.quantity);
+//
+//        BigDecimal subTotal = basePrice.multiply(quantity);
+//        BigDecimal discountAmount = subTotal.multiply(discountPercent);
+//
+//        return subTotal.subtract(discountAmount);
+//    }
 }

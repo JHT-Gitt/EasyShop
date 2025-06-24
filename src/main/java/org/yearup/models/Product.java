@@ -31,6 +31,9 @@ public class Product
         this.imageUrl = imageUrl;
     }
 
+    public Product(int productId, String name, String description, BigDecimal price, String color, String category, boolean isActive) {
+    }
+
     public int getProductId()
     {
         return productId;

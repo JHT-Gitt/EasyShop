@@ -20,6 +20,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/cart")
 @PreAuthorize("isAuthenticated()")
+@CrossOrigin
 public class ShoppingCartController
 {
     // a shopping cart requires
@@ -58,14 +59,28 @@ public class ShoppingCartController
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
     @PostMapping("/products/{productId}")
-    public void addProductToCart(@PathVariable int productId, Principal principal) {
+    public ShoppingCart addProductToCart(@PathVariable int productId, Principal principal) {
         try {
             String username = principal.getName();
+            System.out.println("USERNAME: " + username);
+
             User user = userDao.getByUserName(username);
-            shoppingCartDao.addToCart(user.getId(), productId);
+            System.out.println("USER: " + user);
+            System.out.println("User: " + user.getId() + " adding product: " + productId);
+            shoppingCartDao.addToCart(user.getId(), productId, 1);
+            return shoppingCartDao.getByUserId(user.getId());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product to cart.");
         }
+//        try {
+//            String username = principal.getName();
+//            User user = userDao.getByUserName(username);
+//            shoppingCartDao.addToCart(user.getId(), productId, 1);
+//            System.out.println("User: " + user.getId() + " adding product: " + productId);
+//        } catch (Exception e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product to cart.");
+//        }
     }
 
     // add a PUT method to update an existing product in the cart - the url should be

@@ -13,6 +13,10 @@ public class ShoppingCart
         this.userId = userId;
     }
 
+    public ShoppingCart() {
+
+    }
+
     public int getUserId() {
         return userId;
     }
