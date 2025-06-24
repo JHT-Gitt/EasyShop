@@ -52,46 +52,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @param httpSecurity
      * @throws Exception
      */
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf().disable()
-
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-                .and()
-                .authorizeRequests()
-                .antMatchers("/cart/**").authenticated() // ✅ Secure your cart endpoints
-                .anyRequest().permitAll() // or customize further
-
-                .and()
-                .apply(securityConfigurerAdapter());
-    }
-
 //    @Override
 //    protected void configure(HttpSecurity httpSecurity) throws Exception {
 //        httpSecurity
-//                // we don't need CSRF because our token is invulnerable
 //                .csrf().disable()
 //
 //                .exceptionHandling()
 //                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 //                .accessDeniedHandler(jwtAccessDeniedHandler)
 //
-//                // create no session
 //                .and()
 //                .sessionManagement()
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //
 //                .and()
+//                .authorizeRequests()
+//                .antMatchers("/cart/**").authenticated() // ✅ Secure your cart endpoints
+//                .anyRequest().permitAll() // or customize further
+//
+//                .and()
 //                .apply(securityConfigurerAdapter());
 //    }
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                // we don't need CSRF because our token is invulnerable
+                .csrf().disable()
+
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+
+                // create no session
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+                .apply(securityConfigurerAdapter());
+    }
 
     private JWTConfigurer securityConfigurerAdapter() {
         return new JWTConfigurer(tokenProvider);
