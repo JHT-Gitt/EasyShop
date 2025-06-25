@@ -42,13 +42,8 @@ public class ShoppingCartController
     {
         try
         {
-            // get the currently logged in username
             String userName = principal.getName();
-            // find database user by userId
             User user = userDao.getByUserName(userName);
-           // int userId = user.getId();
-
-            // use the shoppingcartDao to get all items in the cart and return the cart
             return shoppingCartDao.getByUserId(user.getId());
         }
         catch(Exception e)
