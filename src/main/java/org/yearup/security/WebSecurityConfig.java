@@ -67,8 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //                .and()
 //                .authorizeRequests()
-//                .antMatchers("/cart/**").authenticated() // ✅ Secure your cart endpoints
-//                .anyRequest().permitAll() // or customize further
+//                .antMatchers("/cart/**").authenticated()
+//                .anyRequest().permitAll()
 //
 //                .and()
 //                .apply(securityConfigurerAdapter());

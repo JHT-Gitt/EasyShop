@@ -2,6 +2,7 @@ package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -62,25 +63,15 @@ public class ShoppingCartController
     public ShoppingCart addProductToCart(@PathVariable int productId, Principal principal) {
         try {
             String username = principal.getName();
-            System.out.println("USERNAME: " + username);
-
             User user = userDao.getByUserName(username);
-            System.out.println("USER: " + user);
-            System.out.println("User: " + user.getId() + " adding product: " + productId);
+//            System.out.println("USER: " + user);
+//            System.out.println("User: " + user.getId() + " adding product: " + productId); // testing if it works
             shoppingCartDao.addToCart(user.getId(), productId, 1);
             return shoppingCartDao.getByUserId(user.getId());
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product to cart.");
         }
-//        try {
-//            String username = principal.getName();
-//            User user = userDao.getByUserName(username);
-//            shoppingCartDao.addToCart(user.getId(), productId, 1);
-//            System.out.println("User: " + user.getId() + " adding product: " + productId);
-//        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product to cart.");
-//        }
     }
 
     // add a PUT method to update an existing product in the cart - the url should be
@@ -101,11 +92,12 @@ public class ShoppingCartController
     // https://localhost:8080/cart
     // POST /cart/products/{productId}
     @DeleteMapping
-    public void clearCart(Principal principal) {
+    public ResponseEntity<Void> clearCart(Principal principal) {
         try {
             String username = principal.getName();
             User user = userDao.getByUserName(username);
             shoppingCartDao.clearCart(user.getId());
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to clear cart.");
         }
