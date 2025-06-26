@@ -8,11 +8,10 @@ Welcome to **EasyShop**, a full-stack e-commerce web application built using Jav
 
 - 🛍️ Product browsing by category, color, and price filter
 - 🔎 Detailed product view
-- 🧑 User registration & login
+- 🧑 User login
 - 🔐 Secure access with Spring Security
-- 🛒 Add to Cart, Update Quantity, and Clear Cart
-- ✅ Role-based access control for Admin and User
-- 📦 Order management and checkout (optional future scope)
+- 🛒 Add to Cart and Clear Cart
+- 🔐 Update User profile
 
 ## 🛠️ Technologies Used
 
@@ -56,4 +55,16 @@ src/ <br>
 │ └── User.java <br>
 ├── security/<br>
 └── EasyshopApplication.java <br>
+
+## Sample Screenshots <br>
+<img src="https://github.com/JHT-Gitt/EasyShop/blob/main/Screenshots/1.png" width="500" height="250">
+<img src="https://github.com/JHT-Gitt/EasyShop/blob/main/Screenshots/2.png" width="500" height="250">
+<img src="https://github.com/JHT-Gitt/EasyShop/blob/main/Screenshots/3.png" width="500" height="250">
+
+### CREDITS AND RESOURCES:
+- Workbook 9 to 11
+- [Google Search](https://google.com)
+- [Chatgpt(2025)](https://chatgpt.com/)
+
+
 
