@@ -59,8 +59,6 @@ public class ShoppingCartController
         try {
             String username = principal.getName();
             User user = userDao.getByUserName(username);
-//            System.out.println("USER: " + user);
-//            System.out.println("User: " + user.getId() + " adding product: " + productId); // testing if it works
             shoppingCartDao.addToCart(user.getId(), productId, 1);
             return shoppingCartDao.getByUserId(user.getId());
         } catch (Exception e) {
